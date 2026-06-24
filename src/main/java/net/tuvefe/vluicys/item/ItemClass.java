@@ -10,7 +10,8 @@ import net.tuvefe.vluicys.Vluicys;
 
 public class ItemClass
 {
-    public static final Item VLUICYS_MUSHROOM = registerItem("vluicys_mushroom", new Item(new Item.Settings()));
+    public static final Item VLUICYS_MUSHROOM = registerItem("vluicys_mushroom",
+            new VluicysMushroomItem(new Item.Settings().food(FoodClass.VLUICYS_MUSHROOM)));
 
     private static Item registerItem(String name, Item item)
     {
