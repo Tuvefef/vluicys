@@ -2,11 +2,13 @@
 
 uniform sampler2D DiffuseSampler;
 uniform float Intensity;
+uniform float InstantEffect;
 
 in vec2 texCoord;
 out vec4 fragColor;
 
 #define __mag2(x) dot((x), (x))
+#define __inverse(x) (1.0 - (x))
 
 vec3 chromaticAberration(vec2 textureCoord)
 {
@@ -23,6 +25,16 @@ vec3 chromaticAberration(vec2 textureCoord)
     return vec3(r, g, b);
 }
 
+float vignette(vec2 textureCoord, const float intensity)
+{
+    textureCoord *= __inverse(textureCoord);
+
+    float vig = (textureCoord.x * textureCoord.y) * intensity;
+    vig = pow(vig, 0.05);
+
+    return vig;
+}
+
 void main(void)
 {
     vec2 textureCoord = texCoord;
@@ -30,6 +42,12 @@ void main(void)
 
     vec3 chromaticAberrationColor = chromaticAberration(textureCoord);
     vec3 finalRenderColor = mix(renderColor.rgb, chromaticAberrationColor, Intensity);
+
+    if (InstantEffect > 0.5)
+    {
+        const float intensity = 10.0;
+        finalRenderColor *= vec3(vignette(textureCoord, intensity));
+    }
 
     fragColor = vec4(finalRenderColor, renderColor.a);
 }

@@ -7,14 +7,28 @@
       "name": "vluicys:common",
       "intarget": "minecraft:main",
       "outtarget": "swap",
+      "inputs": [
+        {
+          "sampler_name": "DiffuseSampler",
+          "target": "minecraft:main"
+        }
+      ],
       "uniforms": [
-        { "name": "Intensity", "values": [ 1.0 ] }
+        { "name": "Intensity", "values": [ 1.0 ] },
+        { "name": "InstantEffect", "values": [1.0] }
+
       ]
     },
     {
       "name": "blit",
       "intarget": "swap",
-      "outtarget": "minecraft:main"
+      "outtarget": "minecraft:main",
+      "inputs": [
+        {
+          "sampler_name": "DiffuseSampler",
+          "target": "swap"
+        }
+      ]
     }
   ]
 }
