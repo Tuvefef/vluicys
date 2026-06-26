@@ -4,10 +4,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.tuvefe.vluicys.shader.VluicysMushroomShader;
+import net.tuvefe.vluicys.shader.DriedVluicysMushroomShader;
 
-public class VluicysMushroomItem extends Item {
-    public VluicysMushroomItem(Settings settings) {
+public class DriedVluicysMushroomItem extends Item {
+    public DriedVluicysMushroomItem(Settings settings) {
         super(settings);
     }
 
@@ -15,8 +15,9 @@ public class VluicysMushroomItem extends Item {
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
         ItemStack result = super.finishUsing(stack, world, user);
         if (world.isClient) {
-            VluicysMushroomShader.timerShader = 1200;
-            VluicysMushroomShader.timerDelay = 90;
+            DriedVluicysMushroomShader.timerShader = 1700;
+            DriedVluicysMushroomShader.timerDelay = 150;
+            DriedVluicysMushroomShader.randomEffectShader();
         }
 
         return result;

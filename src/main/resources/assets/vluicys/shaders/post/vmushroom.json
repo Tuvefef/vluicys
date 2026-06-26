@@ -4,7 +4,7 @@
   ],
   "passes": [
     {
-      "name": "vluicys:common",
+      "name": "vluicys:vmushroom",
       "intarget": "minecraft:main",
       "outtarget": "swap",
       "inputs": [

@@ -11,6 +11,8 @@ import net.tuvefe.vluicys.Vluicys;
 public class ItemClass {
     public static final Item VLUICYS_MUSHROOM = registerItem("vluicys_mushroom",
             new VluicysMushroomItem(new Item.Settings().food(FoodClass.VLUICYS_MUSHROOM)));
+    public static final Item DRIED_VLUICYS_MUSHROOM = registerItem("dried_vluicys_mushroom",
+            new DriedVluicysMushroomItem(new Item.Settings().food(FoodClass.DRIED_VLUICYS_MUSHROOM)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Vluicys.MOD_ID, name), item);
@@ -20,6 +22,7 @@ public class ItemClass {
         Vluicys.LOGGER.info("ya esta puto xdxdxd" + Vluicys.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(VLUICYS_MUSHROOM);
+            entries.add(DRIED_VLUICYS_MUSHROOM);
         });
     }
 }

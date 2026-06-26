@@ -7,7 +7,7 @@ import org.ladysnake.satin.api.event.PostWorldRenderCallback;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
 
-public class VluicysShaderClass {
+public class VluicysMushroomShader {
     public static int timerShader = 0;
     public static int timerDelay = 0;
 
@@ -31,7 +31,7 @@ public class VluicysShaderClass {
     }
 
     public static final ManagedShaderEffect VLUICYS_EFFECT = ShaderEffectManager.getInstance()
-            .manage(Identifier.of(Vluicys.MOD_ID, "shaders/post/common.json"));
+            .manage(Identifier.of(Vluicys.MOD_ID, "shaders/post/vmushroom.json"));
 
     public static void register() {
         PostWorldRenderCallback.EVENT.register((camera, tickDelta) -> {
