@@ -6,15 +6,19 @@ import net.tuvefe.vluicys.Vluicys;
 import org.ladysnake.satin.api.event.PostWorldRenderCallback;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
+import net.tuvefe.vluicys.common.Common;
 
-public class VluicysMushroomShader {
+public class VluicysMushroomShader extends Shader {
+    public static final VluicysMushroomShader INSTANCE = new VluicysMushroomShader();
+
     public static int timerShader = 0;
     public static int timerDelay = 0;
-
+    
     public static final int EFFECT_DURATION = 1100;
     public static final float PEAK_POINT = 0.3f;
 
-    public static float shaderEffectTimer() {
+    @Override
+    protected float evolutionTimerShader() {
         float progress = timerShader / (float)EFFECT_DURATION;
         float t = 1.0f - progress;
         float intensity;
@@ -33,11 +37,12 @@ public class VluicysMushroomShader {
     public static final ManagedShaderEffect VLUICYS_EFFECT = ShaderEffectManager.getInstance()
             .manage(Identifier.of(Vluicys.MOD_ID, "shaders/post/vmushroom.json"));
 
-    public static void register() {
+    @Override
+    public void register() {
         PostWorldRenderCallback.EVENT.register((camera, tickDelta) -> {
             if (timerDelay == 0 && timerShader > 0) {
-                VLUICYS_EFFECT.setUniformValue("Intensity", shaderEffectTimer());
-                VLUICYS_EFFECT.setUniformValue("InstantEffect", 1.0f);
+                VLUICYS_EFFECT.setUniformValue("Intensity", evolutionTimerShader());
+                VLUICYS_EFFECT.setUniformValue("time", Common.secondsTimerShader(timerShader));
                 VLUICYS_EFFECT.render(tickDelta);
             }
         });
@@ -53,9 +58,6 @@ public class VluicysMushroomShader {
 
             if (timerShader > 0) {
                 timerShader--;
-                if (timerShader == 0) {
-                    VLUICYS_EFFECT.setUniformValue("InstantEffect", 0.0f);
-                }
             }
         });
     }

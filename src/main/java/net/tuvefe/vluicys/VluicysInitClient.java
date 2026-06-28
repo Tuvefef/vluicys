@@ -7,7 +7,7 @@ import net.tuvefe.vluicys.shader.VluicysMushroomShader;
 public class VluicysInitClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        VluicysMushroomShader.register();
-        DriedVluicysMushroomShader.register();
+        VluicysMushroomShader.INSTANCE.register();
+        DriedVluicysMushroomShader.INSTANCE.register();
     }
 }

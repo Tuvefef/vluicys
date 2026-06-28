@@ -19,7 +19,7 @@ public class ItemClass {
     }
 
     public static void itemRegister() {
-        Vluicys.LOGGER.info("ya esta puto xdxdxd" + Vluicys.MOD_ID);
+        Vluicys.LOGGER.info("loaded " + Vluicys.MOD_ID);
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(VLUICYS_MUSHROOM);
             entries.add(DRIED_VLUICYS_MUSHROOM);

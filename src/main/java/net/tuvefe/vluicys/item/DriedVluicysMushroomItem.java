@@ -17,7 +17,6 @@ public class DriedVluicysMushroomItem extends Item {
         if (world.isClient) {
             DriedVluicysMushroomShader.timerShader = 1700;
             DriedVluicysMushroomShader.timerDelay = 150;
-            DriedVluicysMushroomShader.randomEffectShader();
         }
 
         return result;

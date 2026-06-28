@@ -15,7 +15,7 @@
       ],
       "uniforms": [
         { "name": "Intensity", "values": [ 1.0 ] },
-        { "name": "InstantEffect", "values": [1.0] }
+        { "name":  "time", "values":  [1.0]}
 
       ]
     },

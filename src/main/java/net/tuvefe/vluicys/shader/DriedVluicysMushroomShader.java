@@ -7,33 +7,23 @@ import org.ladysnake.satin.api.event.PostWorldRenderCallback;
 import org.ladysnake.satin.api.managed.ManagedShaderEffect;
 import org.ladysnake.satin.api.managed.ShaderEffectManager;
 
-import static net.tuvefe.vluicys.common.Common.randomRange;
+import net.tuvefe.vluicys.common.Common;
 
-public class DriedVluicysMushroomShader {
+public class DriedVluicysMushroomShader extends Shader {
+    public static final DriedVluicysMushroomShader INSTANCE = new DriedVluicysMushroomShader();
+
     public static int timerShader = 0;
     public static int timerDelay = 0;
 
     public static final int EFFECT_DURATION = 1600;
     public static final float PEAK_POINT = 0.3f;
 
-    private static float peak1Intensity = 1.0f;
-    private static float peak2Intensity = 1.0f;
-
-    public static void randomEffectShader() {
-        peak1Intensity = randomRange(0.3f, 0.5f);
-        peak2Intensity = randomRange(0.3f, 0.5f);
-    }
-
-    public static float shaderEffectTimer() {
+    @Override
+    protected float evolutionTimerShader() {
         float progress = timerShader / (float)EFFECT_DURATION;
-        float cycle = progress * 2.0f;
-
-        int peakIndex = (int)cycle;
-        float t = 1.0f - (cycle % 1.0f);
-
-        float peakStrength = (peakIndex == 0) ? peak1Intensity : peak2Intensity;
-
+        float t = 1.0f - progress;
         float intensity;
+
         if (t < PEAK_POINT) {
             float ramp = t / PEAK_POINT;
             intensity = ramp * ramp;
@@ -42,17 +32,19 @@ public class DriedVluicysMushroomShader {
             intensity = 1.0f - (ramp * ramp);
         }
 
-        return intensity * peakStrength;
+        return intensity;
     }
 
-    public static final ManagedShaderEffect DRIED_VLUICYS_EFFECT = ShaderEffectManager.getInstance()
+    public static final ManagedShaderEffect DRIED_VLUICYS_SHADER = ShaderEffectManager.getInstance()
             .manage(Identifier.of(Vluicys.MOD_ID, "shaders/post/dvmushroom.json"));
 
-    public static void register() {
+    @Override
+    public void register() {
         PostWorldRenderCallback.EVENT.register(((camera, tickDelta) -> {
             if (timerDelay == 0 && timerShader > 0) {
-                DRIED_VLUICYS_EFFECT.setUniformValue("Intensity", shaderEffectTimer());
-                DRIED_VLUICYS_EFFECT.render(tickDelta);
+                DRIED_VLUICYS_SHADER.setUniformValue("Intensity", evolutionTimerShader());
+                DRIED_VLUICYS_SHADER.setUniformValue("time", Common.secondsTimerShader(timerShader));
+                DRIED_VLUICYS_SHADER.render(tickDelta);
             }
         }));
 
